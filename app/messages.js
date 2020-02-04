@@ -5,6 +5,7 @@ const path = './messages';
 
 router.post('/', (req, res) => {
 	const date = new Date().toISOString();
+
 	const fileName = `./messages/${date}.txt`;
 
 	const message = {
@@ -27,8 +28,10 @@ router.post('/', (req, res) => {
 router.get('/', (req, res) => {
 	fs.readdir(path, (err, files) => {
 		let messages = [];
-		files = files.slice(-5);
-		files.reverse().forEach(file => {
+		files
+			.slice(-5)
+			.reverse()
+			.forEach(file => {
 			const oneFile = fs.readFileSync(`${path}/${file}`);
 			messages.push(JSON.parse(oneFile));
 		});
