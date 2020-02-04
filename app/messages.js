@@ -26,17 +26,21 @@ router.post('/', (req, res) => {
 });
 
 router.get('/', (req, res) => {
-	fs.readdir(path, (err, files) => {
-		let messages = [];
-		files
-			.slice(-5)
-			.reverse()
-			.forEach(file => {
-			const oneFile = fs.readFileSync(`${path}/${file}`);
-			messages.push(JSON.parse(oneFile));
+	try {
+		fs.readdir(path, (err, files) => {
+			let messages = [];
+			files
+				.slice(-5)
+				.reverse()
+				.forEach(file => {
+					const oneFile = fs.readFileSync(`${path}/${file}`);
+					messages.push(JSON.parse(oneFile));
+				});
+			res.send(messages);
 		});
-		res.send(messages);
-	});
+	} catch (err) {
+		console.error(err);
+	}
 });
 
 
